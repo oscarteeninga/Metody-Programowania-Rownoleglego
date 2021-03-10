@@ -1,7 +1,6 @@
 #include "parameters.h"
 
 double sender_buffered(int size) {
-    MPI_Buffer_attach(malloc(size), size);
     char *buff = malloc(size);
     int i;
     double start = MPI_Wtime();
@@ -13,7 +12,6 @@ double sender_buffered(int size) {
 }
 
 void receiver_buffered(int size) {
-    MPI_Buffer_attach(malloc(size), size);
     char *buff = malloc(size);
     int i;
     for (i = 0; i < N; i++) {
@@ -24,7 +22,6 @@ void receiver_buffered(int size) {
 
 void test_buffered(int rank) {
 
-    MPI_Buffer_attach(malloc(1), 1);
 
     char buff[1];
     double start_latency = MPI_Wtime();
@@ -57,6 +54,7 @@ int main(int argc, char *argv[]) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    MPI_Buffer_attach(malloc(MAX_SIZE), MAX_SIZE);
     test_buffered(rank);
 
     MPI_Finalize();

@@ -11,10 +11,7 @@ double send_recv_buffered(int size) {
     return MPI_Wtime() - start;
 }
 
-void test_buffered(int rank) {
-
-    MPI_Buffer_attach(malloc(1), 1);
-    
+void test_buffered(int rank) {    
     char buff[1];
     printf("====Buffered====\n");
     double start_latency = MPI_Wtime();
@@ -25,7 +22,6 @@ void test_buffered(int rank) {
 
     int size;
     for (size = 1; size <= MAX_SIZE; size *= 2) {
-        MPI_Buffer_attach(malloc(size), size);
         double time = send_recv_buffered(size);
         printf("%.2f, %d\n", N*size/time/1000000*2, size);
     }
@@ -41,6 +37,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
+    MPI_Buffer_attach(malloc(MAX_SIZE), MAX_SIZE);
     test_buffered(rank);
 
     MPI_Finalize();
