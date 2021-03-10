@@ -2,8 +2,9 @@
 
 double sender(int size) {
     char *buff = malloc(size);
+    int i;
     double start = MPI_Wtime();
-    for (int i = 0; i < N; i++) {
+    for (i = 0; i < N; i++) {
         MPI_Send(buff, size, MPI_BYTE, RECEIVER, 0, MPI_COMM_WORLD);
         MPI_Recv(buff, size, MPI_BYTE, RECEIVER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
@@ -12,7 +13,8 @@ double sender(int size) {
 
 void receiver(int size) {
     char *buff = malloc(size);
-    for (int i = 0; i < N; i++) {
+    int i;
+    for (i = 0; i < N; i++) {
         MPI_Recv(buff, size, MPI_BYTE, SENDER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         MPI_Send(buff, size, MPI_BYTE, SENDER, 0, MPI_COMM_WORLD);
     }
@@ -31,7 +33,8 @@ void test(int rank) {
         printf("Latency: %f ms\n", latency);
     }
 
-    for (int size = 1; size <= MAX_SIZE; size *= 2) {
+    int size;
+    for (size = 1; size <= MAX_SIZE; size *= 2) {
         if (rank == SENDER) {
             double time = sender(size);
             printf("%.2f, %d\n", N*size/time/1000000*2, size);
