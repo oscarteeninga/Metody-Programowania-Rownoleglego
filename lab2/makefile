@@ -1,22 +1,22 @@
-all: build twoshared oneshared
+all: build two twobuff one onebuff
 
 build:
-	mpicc -o two_shared.x two_shared.c
-	mpicc -o one_shared.x one_shared.c
-	# mpicc -o two_network.x two_network.c
-	# mpicc -o one_network.x one_network.c
+	mpicc -o two.x two.c
+	mpicc -o one.x one.c
+	mpicc -o two_buff.x two_buff.c
+	mpicc -o one_buff.x one_buff.c
 
-twoshared:
-	mpirun -np 2 two_shared.x
+two:
+	mpiexec -np 2 two.x
 
-twonet:
-	mpirun -np 2 two_network.x
+twobuff:
+	mpiexec -np 2 two_buff.x
 
-oneshared:
-	mpirun -np 1 one_shared.x
+one:
+	mpiexec -np 1 one.x
 
-onenet:
-	mpirun -np 1 one_network.x
+onebuff:
+	mpiexec -np 1 one_buff.x
 
 clean:
 	rm -rf *.x
