@@ -7,16 +7,16 @@ build:
 	mpicc -o one_buff.x one_buff.c
 
 two:
-	mpiexec -np 2 two.x
+	mpiexec -machinefile ./allnodes -np 2 ./two.x
 
 twobuff:
-	mpiexec -np 2 two_buff.x
+	mpiexec -machinefile ./allnodes -np 2 ./two_buff.x
 
 one:
-	mpiexec -np 1 one.x
+	mpiexec -machinefile ./allnodes -np 1 ./one.x
 
 onebuff:
-	mpiexec -np 1 one_buff.x
+	mpiexec -machinefile ./allnodes -np 1 ./one_buff.x
 
 clean:
 	rm -rf *.x
