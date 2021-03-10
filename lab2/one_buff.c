@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    MPI_Buffer_attach(malloc(MAX_SIZE), MAX_SIZE);
+    MPI_Buffer_attach(malloc(MAX_SIZE*2), MAX_SIZE*2);
     test_buffered(rank);
 
     MPI_Finalize();
