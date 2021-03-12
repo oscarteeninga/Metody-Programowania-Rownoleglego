@@ -5,8 +5,8 @@ build:
 	mpicc -o buffered.x buffered.c
 
 one_node:
-	mpiexec -machinefile ./onenodes -np 2 ./standard.x
-	mpiexec -machinefile ./onenodes -np 2 ./buffered.x
+	mpiexec -machinefile ./onenode -np 2 ./standard.x
+	mpiexec -machinefile ./onenode -np 2 ./buffered.x
 
 two_nodes_same_host:
 	mpiexec -machinefile ./twonodessamehost -np 2 ./standard.x
