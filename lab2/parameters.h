@@ -6,5 +6,5 @@
 
 #define SENDER 1
 #define RECEIVER 0
-#define N 10000
-#define MAX_SIZE 512
+#define N 100000
+#define MAX_SIZE 8096

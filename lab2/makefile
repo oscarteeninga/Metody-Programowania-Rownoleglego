@@ -1,22 +1,22 @@
-all: build two twobuff one onebuff
+remote: build standard buffered
+
+local: build standard_local buffered_local
 
 build:
-	mpicc -o two.x two.c
-	mpicc -o one.x one.c
-	mpicc -o two_buff.x two_buff.c
-	mpicc -o one_buff.x one_buff.c
+	mpicc -o standard.x standard.c
+	mpicc -o buffered.x buffered.c
 
-two:
-	mpiexec -machinefile ./allnodes -np 2 ./two.x
+standard:
+	mpiexec -machinefile ./allnodes -np 2 ./standard.x
 
-twobuff:
-	mpiexec -machinefile ./allnodes -np 2 ./two_buff.x
+buffered:
+	mpiexec -machinefile ./allnodes -np 2 ./buffered.x
 
-one:
-	mpiexec -machinefile ./allnodes -np 1 ./one.x
+standard_local:
+	mpiexec -np 2 ./standard.x
 
-onebuff:
-	mpiexec -machinefile ./allnodes -np 1 ./one_buff.x
+buffered_local:
+	mpiexec -np 2 ./buffered.x
 
 clean:
 	rm -rf *.x
