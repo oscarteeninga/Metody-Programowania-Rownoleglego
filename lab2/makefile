@@ -1,21 +1,23 @@
-remote: build standard buffered
-
-local: build standard_local buffered_local
+all: build local one_node two_nodes_same_host two_nodes_other_host
 
 build:
 	mpicc -o standard.x standard.c
 	mpicc -o buffered.x buffered.c
 
-standard:
-	mpiexec -machinefile ./allnodes -np 2 ./standard.x
+one_node:
+	mpiexec -machinefile ./onenodes -np 2 ./standard.x
+	mpiexec -machinefile ./onenodes -np 2 ./buffered.x
 
-buffered:
-	mpiexec -machinefile ./allnodes -np 2 ./buffered.x
+two_nodes_same_host:
+	mpiexec -machinefile ./twonodessamehost -np 2 ./standard.x
+	mpiexec -machinefile ./twonodessamehost -np 2 ./buffered.x
 
-standard_local:
+two_nodes_other_host:
+	mpiexec -machinefile ./twonodesotherhost -np 2 ./standard.x
+	mpiexec -machinefile ./twonodesotherhost -np 2 ./buffered.x
+
+local:
 	mpiexec -np 2 ./standard.x
-
-buffered_local:
 	mpiexec -np 2 ./buffered.x
 
 clean:
