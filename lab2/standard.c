@@ -21,23 +21,11 @@ void receiver(int size) {
 }
 
 void test(int rank) {
-    char buff[1];
-
-    double start_latency = MPI_Wtime();
-    if (rank == SENDER) {
-        MPI_Send(buff, 1, MPI_BYTE, RECEIVER, 0, MPI_COMM_WORLD);
-    } else if (rank == RECEIVER) {
-        MPI_Recv(buff, 1, MPI_BYTE, SENDER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        double latency = MPI_Wtime()*1000-start_latency*1000;
-        printf("====Standard====\n");
-        printf("Latency: %f ms\n", latency);
-    }
-
     int size;
     for (size = 1; size <= MAX_SIZE; size *= 2) {
         if (rank == SENDER) {
             double time = sender(size);
-            printf("%.2f, %d\n", N*size/time/1000000*2, size);
+            printf("%.5f", N*size/time/1000000*2);
         } else if (rank == RECEIVER) {
             receiver(size);
         }
