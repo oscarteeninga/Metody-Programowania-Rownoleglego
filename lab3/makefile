@@ -6,7 +6,7 @@ seq:
 	./mc_sek.x $(n)
 
 par:
-	mpiexec -np $(p) ./mc_par.x $(n)
+	mpiexec -machinefile ./allnodes -np $(p) ./mc_par.x $(n)
 
 clean:
 	rm -rf *.x

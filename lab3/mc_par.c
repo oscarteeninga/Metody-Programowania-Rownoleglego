@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         unsigned long long in = montecarlo(0, size);
         MPI_Reduce(&in, &global_in, 1, MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
         printf("Time: %lf\n", MPI_Wtime() - start);
-        printf("Processors: %d", num_proc);
+        printf("Processors: %d\n", num_proc);
         printf("n = %llu\n", n);
         printf("π = %'.10Lf\n", (long double) global_in*4/n);
     } else {
