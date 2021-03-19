@@ -6,7 +6,7 @@ seq:
 	./mc_sek.x $(n)
 
 par:
-	mpiexec -np $(p) ./mc_par.x $(4*$(*n))
+	mpiexec -np $(p) ./mc_par.x $(n)
 
 silne:
 	mpiexec -machinefile ./allnodes -np 12 ./mc_par.x $(n)
