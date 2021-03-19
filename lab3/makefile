@@ -23,18 +23,18 @@ silne:
 	mpiexec -machinefile ./allnodes -np 1 ./mc_par.x $(n)
 
 slabe:
-	mpiexec -machinefile ./allnodes -np 12 ./mc_par.x 1200000000
-	mpiexec -machinefile ./allnodes -np 11 ./mc_par.x 1100000000
-	mpiexec -machinefile ./allnodes -np 10 ./mc_par.x 1000000000
-	mpiexec -machinefile ./allnodes -np 9 ./mc_par.x 900000000
-	mpiexec -machinefile ./allnodes -np 8 ./mc_par.x 800000000
-	mpiexec -machinefile ./allnodes -np 7 ./mc_par.x 700000000
-	mpiexec -machinefile ./allnodes -np 6 ./mc_par.x 600000000
-	mpiexec -machinefile ./allnodes -np 5 ./mc_par.x 500000000
-	mpiexec -machinefile ./allnodes -np 4 ./mc_par.x 400000000
-	mpiexec -machinefile ./allnodes -np 3 ./mc_par.x 300000000
-	mpiexec -machinefile ./allnodes -np 2 ./mc_par.x 200000000
-	mpiexec -machinefile ./allnodes -np 1 ./mc_par.x 100000000
+	mpiexec -machinefile ./allnodes -np 12 ./mc_par.x 12000000000
+	mpiexec -machinefile ./allnodes -np 11 ./mc_par.x 11000000000
+	mpiexec -machinefile ./allnodes -np 10 ./mc_par.x 10000000000
+	mpiexec -machinefile ./allnodes -np 9 ./mc_par.x 9000000000
+	mpiexec -machinefile ./allnodes -np 8 ./mc_par.x 8000000000
+	mpiexec -machinefile ./allnodes -np 7 ./mc_par.x 7000000000
+	mpiexec -machinefile ./allnodes -np 6 ./mc_par.x 6000000000
+	mpiexec -machinefile ./allnodes -np 5 ./mc_par.x 5000000000
+	mpiexec -machinefile ./allnodes -np 4 ./mc_par.x 4000000000
+	mpiexec -machinefile ./allnodes -np 3 ./mc_par.x 3000000000
+	mpiexec -machinefile ./allnodes -np 2 ./mc_par.x 2000000000
+	mpiexec -machinefile ./allnodes -np 1 ./mc_par.x 1000000000
 
 clean:
 	rm -rf *.x
