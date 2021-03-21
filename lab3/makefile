@@ -1,6 +1,6 @@
 build:
 	gcc -o mc_sek.x mc_sek.c
-	mpicc -o2 mc_par.x mc_par.c
+	mpicc -o mc_par.x mc_par.c
 
 seq:
 	./mc_sek.x $(n)
