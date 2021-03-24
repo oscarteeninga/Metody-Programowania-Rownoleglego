@@ -29,7 +29,7 @@ weak:
 	@echo Skalowanie słabe [n = $(n)]:
 	@for time in $(TIMES); do \
 		for p in $(ZEUS); do \
-			mpiexec -np $$p ./montecarlo.x $($$p * $(n)) 2>/dev/null ; \
+			mpiexec -np $$p ./montecarlo.x $$(( $$p * $(n) )) 2>/dev/null ; \
 		done ; \
 		printf "\n" ; \
 	done
