@@ -17,6 +17,6 @@ make strong n=500000000
 make strong n=22360679l
 make strong n=1000000
 
-make weak n=500000000
-make weak n=22360679l
-make weak n=1000000
+make weak n=50000000
+make weak n=2236067
+make weak n=100000
