@@ -13,10 +13,10 @@ make build
 
 chmod 777 *
 
-make strong n=1000000000
-make strong n=31622776
+make strong n=500000000
+make strong n=22360679l
 make strong n=1000000
 
-make weak n=1000000000
-make weak n=31622776
+make weak n=500000000
+make weak n=22360679l
 make weak n=1000000
