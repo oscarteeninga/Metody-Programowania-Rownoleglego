@@ -21,6 +21,7 @@ strong:
 		for p in $(ZEUS); do \
 			mpiexec -np $$p ./montecarlo.x $(n) 2>/dev/null ; \
 		done ; \
+		printf "\n" ; \
 	done
 	@printf "\n"
 
@@ -30,6 +31,7 @@ weak:
 		for p in $(ZEUS); do \
 			mpiexec -np $$p ./montecarlo.x $($$p * $(n)) 2>/dev/null ; \
 		done ; \
+		printf "\n" ; \
 	done
 	@printf "\n"
 
