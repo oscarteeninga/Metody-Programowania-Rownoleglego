@@ -26,7 +26,7 @@ strong:
 	@printf "\n"
 
 weak:
-	@echo Skalowanie słabe [n = $(n)]:
+	@echo Skalowanie slabe [n = $(n)]:
 	@for time in $(TIMES); do \
 		for p in $(ZEUS); do \
 			mpiexec -np $$p ./montecarlo.x $$(( $$p * $(n) )) 2>/dev/null ; \
