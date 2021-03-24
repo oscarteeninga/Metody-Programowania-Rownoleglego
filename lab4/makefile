@@ -19,7 +19,7 @@ strong:
 	@echo Skalowanie silne [n = $(n)]:
 	@for time in $(TIMES); do \
 		for p in $(ZEUS); do \
-			mpiexec -machinefile ./allnodes -np $$p ./montecarlo.x $(n) ; \
+			mpiexec -np $$p -npp 1 ./montecarlo.x $(n) ; \
 		done ; \
 	done
 	@printf "\n"
@@ -28,7 +28,7 @@ weak:
 	@echo Skalowanie słabe [n = $(n)]:
 	@for time in $(TIMES); do \
 		for p in $(ZEUS); do \
-			mpiexec -machinefile ./allnodes -np $$p ./montecarlo.x $($$p * $(n)) ; \
+			mpiexec -np $$p -npp 1 ./montecarlo.x $($$p * $(n)) ; \
 		done ; \
 	done
 	@printf "\n"
