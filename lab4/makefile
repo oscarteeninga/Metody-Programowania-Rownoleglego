@@ -1,6 +1,6 @@
 PC = $(shell seq 1 8)
 ZEUS = $(shell seq 1 12)
-TIMES = $(shell seq 1 4) 
+TIMES = $(shell seq 1 5) 
 
 build:
 	mpicc -o montecarlo.x montecarlo.c
