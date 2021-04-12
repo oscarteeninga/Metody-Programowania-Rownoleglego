@@ -20,4 +20,4 @@ for line in sys.stdin:
 for word, count in sorted(counting.items()):
     print '%s\t%s' % (word, count)
 
-print(end - time.time())
+print(time.time() - start)
