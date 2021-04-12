@@ -1,0 +1,1 @@
+ssh -i teeninga_oscar_mpr.pem hadoop@ec2-3-238-101-28.compute-1.amazonaws.com
