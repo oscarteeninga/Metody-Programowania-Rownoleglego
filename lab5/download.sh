@@ -5,4 +5,3 @@ do
    wget "http://www.gutenberg.org/files/$i/$i-0.txt"
 done
 <ctrl+d>
-$ chmod u+x download.sh
