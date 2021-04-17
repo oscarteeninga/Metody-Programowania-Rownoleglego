@@ -33,3 +33,6 @@
 
 # MacOS files
 .DS_Store
+
+# PEM files
+*.pem
