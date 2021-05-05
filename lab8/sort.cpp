@@ -10,8 +10,8 @@
 
 using namespace std;
 
-vector<vector<vector<int > > > getBuckets(int threads, int buckets) {
-    vector<int> vector3(N, 0);
+vector<vector<vector<int > > > getBuckets(int threads, int buckets, int n) {
+    vector<int> vector3(n, 0);
     vector<vector<int > > vector2(buckets, vector3);
     vector<vector<vector<int > > > vector1(threads, vector2);
     return vector1;
@@ -61,19 +61,10 @@ bool between(int a, int j, int interval) {
     return a >= j*interval && a < (j+1)*interval;
 }
 
-vector<int> bucketsort1(int threads, int buckets_count) {
 
-    // Przygotowania
+vector<int> getRandomVector(){
     vector<int> a;
-    vector<int> r;
-    vector<vector<vector<int> > > buckets = getBuckets(1, buckets_count);
-    vector<int> indexes(buckets_count, 0);
-    int interval = (MAX-MIN) / buckets_count;
-    double rand_start, split_start, sort_start, concat_start;
-
-    // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
-    rand_start = omp_get_wtime();
-    #pragma omp parallel
+     #pragma omp parallel
     {
         vector<int> vec_private;
         unsigned int myseed = omp_get_thread_num();
@@ -84,6 +75,21 @@ vector<int> bucketsort1(int threads, int buckets_count) {
         #pragma omp critical
         a.insert(a.end(), vec_private.begin(), vec_private.end());
     }
+    return a;
+}
+
+vector<int> bucketsort1(int threads, int buckets_count) {
+
+    // Przygotowania
+    vector<int> r;
+    vector<vector<vector<int> > > buckets = getBuckets(1, buckets_count, N);
+    vector<int> indexes(buckets_count, 0);
+    int interval = (MAX-MIN) / buckets_count;
+    double rand_start, split_start, sort_start, concat_start;
+
+    // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
+    rand_start = omp_get_wtime();
+    vector<int> a = getRandomVector();
     cout << "rand:\t" << (omp_get_wtime() - rand_start) << " s" << endl;
 
     // Podział na kubełki
@@ -118,10 +124,115 @@ vector<int> bucketsort1(int threads, int buckets_count) {
     return r;
 }
 
-vector<int> bucketsort2(int threads, int buckets) {
+vector<int> bucketsort2(int threads, int buckets_count) {
+
+    vector<vector<vector<int > > > buckets = getBuckets(threads, buckets_count, 0);
+    vector<int> result;
+
+    double bucket_interval = 100.0 / buckets_count;
+
+    double rand_start, split_start, sort_start, concat_start;
+
+    // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
+    rand_start = omp_get_wtime();
+    vector<int> vector = getRandomVector();
+    cout << "rand:\t" << (omp_get_wtime() - rand_start) << " s" << endl;
+
+    // Podział na kubełki
+    split_start = omp_get_wtime();
+
+
+    #pragma omp parallel for shared(buckets, vector, bucket_interval) schedule(dynamic)
+    for (int i = 0; i < buckets_count; i++) {
+        for (int j : vector) {
+            if (j >= i*bucket_interval && j <= (i+1)*bucket_interval) {
+                buckets[0][i].push_back(j);
+            }
+        }
+    }
+
+    cout << "split:\t" << (omp_get_wtime() - split_start) << " s" << endl;
+
+
+    // Sortowanie kubełkow
+    sort_start = omp_get_wtime();
+
+#pragma omp parallel for schedule(dynamic)
+    for (int i = 0; i < buckets_count; i++) {
+        quicksort(buckets[0][i], 0, buckets[0][i].size()-1);
+    }
+    cout << "sort:\t" << (omp_get_wtime() - sort_start) << " s" << endl;
+
+    // Łączenie kubełkow
+    concat_start = omp_get_wtime();
+
+    for (int i = 0; i < buckets_count; i++) {
+        result.insert(result.end(), buckets[0][i].begin(), buckets[0][i].end());
+    }
+    cout << "concat:\t" << (omp_get_wtime() - concat_start) << " s" << endl;
+
+    return result;
 }
 
-vector<int> bucketsort3(int threads, int buckets) {
+vector<int> bucketsort3(int threads, int buckets_count) {
+    vector<vector<vector<int > > > buckets = getBuckets(threads, buckets_count, 0);
+    vector<int> result;
+    double bucket_interval = 100.0 / buckets_count;
+    double rand_start, split_start, sort_start, concat_start, concat_threads_buckets_start;
+
+    // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
+    rand_start = omp_get_wtime();
+    vector<int> vector = getRandomVector();
+    cout << "rand:\t" << (omp_get_wtime() - rand_start) << " s" << endl;
+
+    // Podział na kubełki
+    split_start = omp_get_wtime();
+
+
+#pragma omp parallel for shared(buckets, vector, bucket_interval) schedule(static, vector.size()/threads)
+    for (int i : vector) {
+        for (int j = 0; j < buckets_count; j++) {
+            if (i >= j*bucket_interval && i <= (j+1)*bucket_interval) {
+                buckets[omp_get_thread_num()][j].push_back(i);
+
+                break;
+            }
+        }
+    }
+
+    cout << "split:\t" << (omp_get_wtime() - split_start) << " s" << endl;
+
+
+    concat_threads_buckets_start = omp_get_wtime();
+
+#pragma omp parallel for schedule(dynamic)
+    for (int i = 0; i < buckets_count; i++) {
+        for (int j = 1; j < threads; j++) {
+            buckets[0][i].insert(buckets[0][i].end(), buckets[j][i].begin(), buckets[j][i].end());
+        }
+    }
+    cout << "concat threads:\t" << (omp_get_wtime() - concat_threads_buckets_start) << " s" << endl;
+
+    // Sortowanie kubełkow
+    sort_start = omp_get_wtime();
+
+#pragma omp parallel for schedule(dynamic)
+    for (int i = 0; i < buckets_count; i++) {
+        quicksort(buckets[0][i], 0, buckets[0][i].size()-1);
+    }
+    cout << "sort:\t" << (omp_get_wtime() - sort_start) << " s" << endl;
+
+    // Łączenie kubełkow
+    concat_start = omp_get_wtime();
+
+    for (int i = 0; i < buckets_count; i++) {
+        result.insert(result.end(), buckets[0][i].begin(), buckets[0][i].end());
+    }
+    cout << "concat:\t" << (omp_get_wtime() - concat_start) << " s" << endl;
+
+    return result;
+
+
 }
 
 int main(int argc, char* argv[]) {
@@ -134,7 +245,7 @@ int main(int argc, char* argv[]) {
     int buckets_count = atoi(argv[2]);
 
     omp_set_num_threads(threads);
-    double start, end;
+    double start;
 
     start = omp_get_wtime();
     cout << "sortowanie 1" << endl;
@@ -142,17 +253,17 @@ int main(int argc, char* argv[]) {
     cout << "sum:\t" << (omp_get_wtime() - start) << " s" << endl;
     cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
 
-    // start = omp_get_wtime();
-    // cout << "sortowanie 2" << endl;
-    // vector<int> result2 = bucketsort2(threads, buckets_count);
-    // cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
-    // cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
+     start = omp_get_wtime();
+     cout << "sortowanie 2" << endl;
+     vector<int> result2 = bucketsort2(threads, buckets_count);
+     cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
+     cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
 
-    // start = omp_get_wtime();
-    // cout << "sortowanie 3" << endl;
-    // vector<int> result3 = bucketsort3(threads, buckets_count);
-    // cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
-    // cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
+     start = omp_get_wtime();
+     cout << "sortowanie 3" << endl;
+     vector<int> result3 = bucketsort3(threads, buckets_count);
+     cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
+     cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
 
     return 0;
 }
