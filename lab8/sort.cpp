@@ -17,12 +17,6 @@ vector<vector<vector<int > > > getBuckets(int threads, int buckets) {
     return vector1;
 }
 
-void swap(vector<int>& v, int x, int y) {
-    int temp = v[x];
-    v[x] = v[y];
-    v[y] = temp;
-}
-
 // https://www.thepolyglotdeveloper.com/2019/04/sort-vector-integers-quicksort-algorithm-cpp/
 int partition(vector<int> &values, int left, int right) {
     int pivotIndex = left + (right - left) / 2;
@@ -68,7 +62,7 @@ bool between(int a, int j, int interval) {
 }
 
 vector<int> bucketsort1(int threads, int buckets_count) {
-    
+
     // Przygotowania
     vector<int> a;
     vector<int> r;
