@@ -257,13 +257,13 @@ int main(int argc, char* argv[]) {
      cout << "sortowanie 2" << endl;
      vector<int> result2 = bucketsort2(threads, buckets_count);
      cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
-     cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
+     cout << (sorted(result2) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
 
      start = omp_get_wtime();
      cout << "sortowanie 3" << endl;
      vector<int> result3 = bucketsort3(threads, buckets_count);
      cout << "sum:\t" << (omp_get_wtime() - start) << " s " << endl;
-     cout << (sorted(result1) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
+     cout << (sorted(result3) ? "" : "UPS, TABLICA NIEPOSORTOWANA!!!!") << endl;
 
     return 0;
 }
