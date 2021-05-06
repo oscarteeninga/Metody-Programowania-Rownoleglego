@@ -79,13 +79,15 @@ vector<int> getRandomVector(){
 }
 
 vector<int> bucketsort1(int threads, int buckets_count) {
+    double prepare_start, rand_start, split_start, sort_start, concat_start;
 
     // Przygotowania
+    prepare_start = omp_get_wtime();
     vector<int> r;
     vector<vector<vector<int> > > buckets = getBuckets(1, buckets_count, N);
     vector<int> indexes(buckets_count, 0);
     int interval = (MAX-MIN) / buckets_count;
-    double rand_start, split_start, sort_start, concat_start;
+    cout << "prepare:" << (omp_get_wtime() - prepare_start) << " s" << endl;
 
     // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
     rand_start = omp_get_wtime();
@@ -126,12 +128,14 @@ vector<int> bucketsort1(int threads, int buckets_count) {
 
 vector<int> bucketsort2(int threads, int buckets_count) {
 
+    double prepare_start, rand_start, split_start, sort_start, concat_start;
+
+    // Przygotowania
+    prepare_start = omp_get_wtime();
     vector<vector<vector<int > > > buckets = getBuckets(threads, buckets_count, 0);
     vector<int> result;
-
     double bucket_interval = 100.0 / buckets_count;
-
-    double rand_start, split_start, sort_start, concat_start;
+    cout << "prepare:" << (omp_get_wtime() - prepare_start) << " s" << endl;
 
     // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
     rand_start = omp_get_wtime();
@@ -175,10 +179,15 @@ vector<int> bucketsort2(int threads, int buckets_count) {
 }
 
 vector<int> bucketsort3(int threads, int buckets_count) {
+    
+    double prepare_start, rand_start, split_start, sort_start, concat_start, concat_threads_buckets_start;
+
+    // Przygotowania
+    prepare_start = omp_get_wtime();
     vector<vector<vector<int > > > buckets = getBuckets(threads, buckets_count, 0);
     vector<int> result;
     double bucket_interval = 100.0 / buckets_count;
-    double rand_start, split_start, sort_start, concat_start, concat_threads_buckets_start;
+    cout << "prepare:" << (omp_get_wtime() - prepare_start) << " s" << endl;
 
     // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
     rand_start = omp_get_wtime();
