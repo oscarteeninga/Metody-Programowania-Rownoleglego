@@ -1,7 +1,7 @@
-all: compile
+all: macos unix
 
-compile: 
-	# MacOS
+macos:
     clang++ -Xpreprocessor -fopenmp sort.cpp -o sort -lomp
-    # Unix
+
+unix:
 	g++ -fopenmp sort.cpp -o sort

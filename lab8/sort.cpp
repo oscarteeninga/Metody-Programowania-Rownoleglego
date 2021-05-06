@@ -157,7 +157,7 @@ vector<int> bucketsort2(int threads, int buckets_count) {
     // Sortowanie kubełkow
     sort_start = omp_get_wtime();
 
-#pragma omp parallel for schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < buckets_count; i++) {
         quicksort(buckets[0][i], 0, buckets[0][i].size()-1);
     }
@@ -189,7 +189,7 @@ vector<int> bucketsort3(int threads, int buckets_count) {
     split_start = omp_get_wtime();
 
 
-#pragma omp parallel for shared(buckets, vector, bucket_interval) schedule(static, vector.size()/threads)
+    #pragma omp parallel for shared(buckets, vector, bucket_interval) schedule(static, vector.size()/threads)
     for (int i : vector) {
         for (int j = 0; j < buckets_count; j++) {
             if (i >= j*bucket_interval && i <= (j+1)*bucket_interval) {
@@ -205,7 +205,7 @@ vector<int> bucketsort3(int threads, int buckets_count) {
 
     concat_threads_buckets_start = omp_get_wtime();
 
-#pragma omp parallel for schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < buckets_count; i++) {
         for (int j = 1; j < threads; j++) {
             buckets[0][i].insert(buckets[0][i].end(), buckets[j][i].begin(), buckets[j][i].end());
@@ -216,7 +216,7 @@ vector<int> bucketsort3(int threads, int buckets_count) {
     // Sortowanie kubełkow
     sort_start = omp_get_wtime();
 
-#pragma omp parallel for schedule(dynamic)
+    #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < buckets_count; i++) {
         quicksort(buckets[0][i], 0, buckets[0][i].size()-1);
     }
