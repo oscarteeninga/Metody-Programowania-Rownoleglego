@@ -10,7 +10,6 @@ int N;
 
 using namespace std;
 
-
 vector<vector<vector<int > > > getBuckets(int threads, int buckets, int n) {
     vector<int> vector3(n, 0);
     vector<vector<int > > vector2(buckets, vector3);
@@ -61,7 +60,6 @@ bool sorted(vector<int> v) {
 bool between(int a, int j, int interval) {
     return a >= j*interval && a < (j+1)*interval;
 }
-
 
 vector<int> getRandomVector(){
     vector<int> a;
@@ -257,6 +255,7 @@ int main(int argc, char* argv[]) {
     int buckets_count = atoi(argv[4]);
 
     cout.precision(10);
+    cout.imbue(locale(""));
 
     omp_set_num_threads(threads);
     double start;

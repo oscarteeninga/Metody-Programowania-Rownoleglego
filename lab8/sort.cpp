@@ -4,7 +4,7 @@
 #include <string>
 #include <omp.h>
 
-#define N 10000000
+int N;
 #define MAX 1000
 #define MIN 0
 
@@ -245,13 +245,14 @@ vector<int> bucketsort3(int threads, int buckets_count) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        cout << "Prawidlowe uruchomienie: ./sort <liczba_watkow> <liczba_kubelkow>" << endl;
+    if (argc < 4) {
+        cout << "Prawidlowe uruchomienie: ./sort <liczba_watkow> <liczba_kubelkow> <rozmiar problemu>" << endl;
         return 1;
     }
 
     int threads = atoi(argv[1]);
     int buckets_count = atoi(argv[2]);
+    N = atoi(argv[3]);
 
     omp_set_num_threads(threads);
     double start;
