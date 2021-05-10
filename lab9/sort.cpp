@@ -239,8 +239,6 @@ vector<int> bucketsort3(int threads, int buckets_count) {
     cout << "\t" << (omp_get_wtime() - concat_start);
 
     return result;
-
-
 }
 
 int main(int argc, char* argv[]) {

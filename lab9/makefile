@@ -5,15 +5,14 @@ TIMES = $(shell seq 1 1)
 
 all: compile test1
 
-compile: macos
-
 macos:
 	clang++ -Xpreprocessor -fopenmp sort.cpp -o sort -lomp
+	clang++ -Xpreprocessor -fopenmp random.cpp -o random -lomp
 
 unix:
 	g++ -fopenmp sort.cpp -o sort
 
-test1seq: compile
+test1seq: macos
 	@echo "size\tbuckets\tprepare\trand\tsplit\tsort\tconcat"
 	@for n in $(N) ; do \
 		for buckets in $(BUCKETS) ; do \
@@ -23,10 +22,19 @@ test1seq: compile
 		done ; \
 	done
 
-test1speedup: compile
+test1speedup: macos
 	@echo "size\tthreads\tprepare\trand\tsplit\tsort\tconcat"
 	@for thread in $(THREADS) ; do \
 		for time in $(TIMES); do \
 			./sort 1 $$n $$thread $$thread ; \
 		done ; \
 	done
+
+testrandomize: macos
+	@echo "size\tbuckets\tmaxdiff\terror"
+	@for thread in $(THREADS) ; do \
+		for time in $(TIMES); do \
+			./random $$n $$thread ; \
+		done ; \
+	done
+
