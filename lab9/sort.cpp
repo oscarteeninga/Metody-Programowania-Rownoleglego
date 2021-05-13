@@ -100,8 +100,9 @@ vector<int> bucketsort1(int threads, int buckets_count) {
 
     #pragma omp parallel for shared(buckets, vector, bucket_interval) schedule(dynamic)
     for (int i = 0; i < buckets_count; i++) {
-        for (int j : vector) {
-            if (j >= i*bucket_interval && j <= (i+1)*bucket_interval) {
+        for (int j = 0; j < vector.size(); j++) {
+            int value = vector[(i + omp_get_thread_num()) % N];
+            if (value >= i*bucket_interval && value <= (i+1)*bucket_interval) {
                 buckets[0][i].push_back(j);
             }
         }
