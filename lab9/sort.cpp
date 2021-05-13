@@ -86,7 +86,7 @@ vector<int> bucketsort1(int threads, int buckets_count) {
     prepare_start = omp_get_wtime();
     vector<vector<vector<int > > > buckets = getBuckets(threads, buckets_count, 0);
     vector<int> result;
-    double bucket_interval = 100.0 / buckets_count;
+    double bucket_interval = (MAX-MIN) / buckets_count;
     cout << (omp_get_wtime() - prepare_start);
 
     // Losowanie wartości wektora https://stackoverflow.com/questions/18669296/c-openmp-parallel-for-loop-alternatives-to-stdvector
