@@ -151,7 +151,7 @@ vector<int> bucketsort2(int threads, int buckets_count) {
     #pragma omp parallel for shared(a, buckets, interval) schedule(static, N/threads)
     for (int i = 0; i < a.size(); i++) {
         for (int j = 0; j < buckets_count; j++) {
-            int value = a[(i + omp_get_thread_num()) % N];
+            int value = a[i];
             if (between(value, j, interval)) {
                 buckets[j][indexes[j]++] = value;
                 break;
