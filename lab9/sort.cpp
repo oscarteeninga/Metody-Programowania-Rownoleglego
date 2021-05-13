@@ -83,7 +83,7 @@ vector<int> bucketsort1(int threads, int buckets_count) {
     // Przygotowania
     prepare_start = omp_get_wtime();
     vector<int> r;
-    vector<vector<vector<int> > > buckets = getBuckets(1, buckets_count, N);
+    vector<vector<int> > buckets = getBuckets(1, buckets_count, N)[0];
     vector<int> indexes(buckets_count, 0);
     int interval = (MAX-MIN) / buckets_count;
     cout << (omp_get_wtime() - prepare_start);
@@ -100,7 +100,7 @@ vector<int> bucketsort1(int threads, int buckets_count) {
         for (int j = 0; j < buckets_count; j++) {
             int value = a[(i + omp_get_thread_num()) % N];
             if (between(value, j, interval)) {
-                buckets[0][j][indexes[j]++] = value;
+                buckets[j][indexes[j]++] = value;
                 break;
             }
         }
@@ -111,14 +111,14 @@ vector<int> bucketsort1(int threads, int buckets_count) {
     sort_start = omp_get_wtime();
     #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < buckets_count; i++) {
-        quicksort(buckets[0][i], 0, indexes[i]-1);
+        quicksort(buckets[i], 0, indexes[i]-1);
     }
     cout << "\t" << (omp_get_wtime() - sort_start);
     
     // Łączenie kubełkow
     concat_start = omp_get_wtime();
     for (int i = 0; i < buckets_count; i++) {
-        r.insert(r.end(), buckets[0][i].begin(), buckets[0][i].begin() + indexes[i]-1);
+        r.insert(r.end(), buckets[i].begin(), buckets[i].begin() + indexes[i]-1);
     }
     cout << "\t" << (omp_get_wtime() - concat_start);
 
