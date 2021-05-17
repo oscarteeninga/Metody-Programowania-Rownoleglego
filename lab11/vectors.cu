@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <helper_timer.h>
 #include <iostream>
-#include <chrono>
+#include <ctime>
 
 using namespace std;
 
@@ -69,13 +69,13 @@ int **cpu(int n){
         c[i] = 0;
     }
 
-    auto start_time = chrono::high_resolution_clock::now();
+    clock_t start_time = clock();
 
     for (int i = 0; i < n; i++) {
         c[i] = a[i] + b[i];
     }
 
-    auto end_time = chrono::high_resolution_clock::now();
+    clock_t end_time = clock();
     double time = (double) (end_time - start_time);
     cout << "gpu\t" << n << "\t" << time << endl;
 
