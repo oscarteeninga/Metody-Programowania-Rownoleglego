@@ -58,7 +58,7 @@ int** cuda(int n, int gridSize, int blockSize){
     return result;
 }
 
-int **cpu(int N){
+int **cpu(int n){
     int * a = new int[n];
     int * b = new int[n];
     int * c = new int[n];

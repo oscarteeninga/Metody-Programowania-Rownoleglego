@@ -3,8 +3,8 @@ GRIDS = $(shell seq 1 12)
 NS = $(shell seq 100000 100000 1000000)
 
 build:
-	nvcc -I cuda-samples/Common/ vectors.cu -o vectors
-
+	nvcc -std=c++11 -I cuda-samples/Common/ vectors.cu -o vectors
+	
 test: build
 	@for n in $(NS); do \
 		for grid in $(GRIDS); do \
