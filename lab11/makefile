@@ -7,7 +7,7 @@ build:
 test_gpu:
 	@for block in $(BLOCKS); do \
 		for grid in $(GRIDS); do \
-			./vectors $$grid $$block 1; \
+			./vectors $$grid $$block 1 ; \
 		done ; \
 		printf "\n" ; \
 	done
@@ -16,7 +16,7 @@ test_gpu:
 test_cpu:
 	@for block in $(BLOCKS); do \
 		for grid in $(GRIDS); do \
-			./vectors $$grid $$block 0; \
+			./vectors $$grid $$block 0 ; \
 		done ; \
 		printf "\n" ; \
 	done
@@ -25,7 +25,7 @@ test_cpu:
 test:
 	@for block in $(BLOCKS); do \
 		for grid in $(GRIDS); do \
-			./vectors $$grid $$block 2; \
+			./vectors $$grid $$block 2 ; \
 		done ; \
 		printf "\n" ; \
 	done

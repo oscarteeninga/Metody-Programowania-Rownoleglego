@@ -8,7 +8,7 @@
 using namespace std;
 
 
-__global__ void add(int *a, int *b, int *c, int N) {
+__global__ void add(int *a, int *b, int *c, long N) {
     int tid = blockIdx.x * blockDim.x + threadIdx.x;
     if (tid < N) {
         c[tid] = a[tid] + b[tid];
@@ -17,7 +17,7 @@ __global__ void add(int *a, int *b, int *c, int N) {
 
 
 
-int** cuda(int n, int gridSize, int blockSize){
+int** cuda(long n, int gridSize, int blockSize){
 
     StopWatchInterface *timer=NULL;
     sdkCreateTimer(&timer);
@@ -58,7 +58,7 @@ int** cuda(int n, int gridSize, int blockSize){
     return result;
 }
 
-int **cpu(int n){
+int **cpu(long n){
     int * a = new int[n];
     int * b = new int[n];
     int * c = new int[n];
@@ -86,7 +86,7 @@ int **cpu(int n){
     return result;
 }
 
-int checkResults(int** cuda, int** cpp, int n){
+int checkResults(int** cuda, int** cpp, long n){
 
     for(int i = 0; i < 3; ++i){
         for (int j = 0; j < n; ++j){
@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
     int gridSize = atoi(argv[1]);
     int blockSize = atoi(argv[2]);
     int method = atoi(argv[3]);
-    int n = gridSize*blockSize;
+    long n = gridSize*blockSize;
 
     if (method == 1) {
         int** cudaResult = cuda(n, gridSize, blockSize);
