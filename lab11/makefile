@@ -9,7 +9,6 @@ test_gpu:
 		for grid in $(GRIDS); do \
 			./vectors $$grid $$block 1 ; \
 		done ; \
-		printf "\n" ; \
 	done
 	@printf "\n"
 
@@ -24,7 +23,6 @@ test:
 		for grid in $(GRIDS); do \
 			./vectors $$grid $$block 2 ; \
 		done ; \
-		printf "\n" ; \
 	done
 	@printf "\n"
 
