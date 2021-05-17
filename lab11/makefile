@@ -5,7 +5,7 @@ NS = $(shell seq 1000000 1000000 10000000)
 build:
 	nvcc -I cuda-samples/Common/ vectors.cu -o vectors
 
-test: build
+test:
 	@for n in $(NS); do \
 		for grid in $(GRIDS); do \
 			for grid in $(GRIDS); do \

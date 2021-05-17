@@ -63,13 +63,12 @@ int **cpu(int n){
     int * b = new int[n];
     int * c = new int[n];
 
+    clock_t start_time = clock();
+
     for (int i = 0; i < n; i++) {
         a[i] = i;
         b[i] = i * 2;
-        c[i] = 0;
     }
-
-    clock_t start_time = clock();
 
     for (int i = 0; i < n; i++) {
         c[i] = a[i] + b[i];
