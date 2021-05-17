@@ -107,13 +107,20 @@ int main(int argc, char* argv[]) {
 
     int gridSize = atoi(argv[1]);
     int blockSize = atoi(argv[2]);
+    int method = argv[3];
     int n = gridSize*blockSize;
 
-    int** cudaResult = cuda(n, gridSize, blockSize);
-    int** cpuResult = cpu(n);
-
-    if(!checkResults(cudaResult, cpuResult, n)) {
-        cout << "Results are NOT equal!" << endl;
+    if (method == "gpu") {
+        int** cudaResult = cuda(n, gridSize, blockSize);
+    } else if (method == "cpu") {
+        int** cpuResult = cpu(n);
+    } else {
+        int** cudaResult = cuda(n, gridSize, blockSize);
+        int** cpuResult = cpu(n);
+        if(!checkResults(cudaResult, cpuResult, n)) {
+           cout << "Results are NOT equal!" << endl;
+        }
     }
+
     return 0;
 }
