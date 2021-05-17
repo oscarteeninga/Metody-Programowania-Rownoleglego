@@ -100,14 +100,14 @@ int checkResults(int** cuda, int** cpp, int n){
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 3) {
-        cout << "Proper format is: <grid_size> <block_size>" << endl;
+    if (argc < 4) {
+        cout << "Proper format is: <grid_size> <block_size> <method>" << endl;
         return 1;
     }
 
     int gridSize = atoi(argv[1]);
     int blockSize = atoi(argv[2]);
-    int method = argv[3];
+    char *method = argv[3];
     int n = gridSize*blockSize;
 
     if (method == "gpu") {
