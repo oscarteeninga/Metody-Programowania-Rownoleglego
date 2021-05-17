@@ -75,7 +75,7 @@ int **cpu(int n){
     }
 
     auto end_time = chrono::high_resolution_clock::now();
-    auto time = chrono::duration_cast<chrono::miliseconds>(end_time - start_time);
+    auto time = end_time - start_time;
     printf("cpu\t%d\t%f\n", n, time);
 
     int ** result = new int*[3];
