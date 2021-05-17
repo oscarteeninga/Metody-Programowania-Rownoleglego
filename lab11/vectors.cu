@@ -74,9 +74,9 @@ int **cpu(int n){
         c[i] = a[i] + b[i];
     }
 
-    auto end_time = std::chrono::high_resolution_clock::now();
-    auto time = end_time - start_time;
-    printf("cpu\t%d\t%f\n");
+    auto end_time = chrono::high_resolution_clock::now();
+    auto time = chrono::duration_cast<chrono::miliseconds>(end_time - start_time);
+    printf("cpu\t%d\t%f\n", n, time);
 
     int ** result = new int*[3];
     result[0] = a;
