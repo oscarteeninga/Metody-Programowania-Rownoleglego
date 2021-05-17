@@ -100,21 +100,19 @@ int checkResults(int** cuda, int** cpp, int n){
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 4) {
-        cout << "Proper format is: <n> <grid_size> <block_size>" << endl;
+    if (argc < 4) 
+        cout << "Proper format is: <grid_size> <block_size>" << endl;
         return 1;
     }
 
-    int n = atoi(argv[1]);
-    int gridSize = atoi(argv[2]);
-    int blockSize = atoi(argv[3]);
+    int gridSize = atoi(argv[1]);
+    int blockSize = atoi(argv[2]);
+    int n = gridSize*blockSize;
 
     int** cudaResult = cuda(n, gridSize, blockSize);
     int** cpuResult = cpu(n);
 
-    if(checkResults(cudaResult, cpuResult, n)) {
-        cout << "Results are equal." << endl;
-    } else {
+    if(!checkResults(cudaResult, cpuResult, n)) {
         cout << "Results are NOT equal!" << endl;
     }
     return 0;
