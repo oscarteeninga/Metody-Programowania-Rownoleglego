@@ -112,14 +112,18 @@ int main(int argc, char* argv[]) {
 
     if (method == 1) {
         int** cudaResult = cuda(n, gridSize, blockSize);
+        delete cudaResult;
     } else if (method == 0) {
         int** cpuResult = cpu(n);
+        delete cpuResult;
     } else {
         int** cudaResult = cuda(n, gridSize, blockSize);
         int** cpuResult = cpu(n);
         if(!checkResults(cudaResult, cpuResult, n)) {
            cout << "Results are NOT equal!" << endl;
         }
+        delete cudaResult;
+        delete cpuResult;
     }
 
     return 0;
