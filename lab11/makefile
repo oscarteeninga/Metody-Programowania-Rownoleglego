@@ -1,5 +1,5 @@
-GRIDS = $(shell seq 1 2 4 8 16 32 64 128 256 512 1024 2048)
-BLOCKS =  $(shell seq 1 2 4 8 16 32 64 128 256 512 1024)
+GRIDS = 1 2 4 8 16 32 64 128 256 512 1024 2048
+BLOCKS =  1 2 4 8 16 32 64 128 256 512 1024
 
 build:
 	nvcc -std=c++11 -I cuda-samples/Common/ vectors.cu -o vectors
