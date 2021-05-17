@@ -18,12 +18,6 @@ __global__ void add(int *a, int *b, int *c, long N) {
 
 
 int** cuda(long n, int gridSize, int blockSize){
-
-    StopWatchInterface *timer=NULL;
-    sdkCreateTimer(&timer);
-    sdkResetTimer(&timer);
-    sdkStartTimer(&timer);
-
     int * a = new int[n];
     int * b = new int[n];
     int * c = new int[n];
@@ -38,6 +32,12 @@ int** cuda(long n, int gridSize, int blockSize){
     cudaMemcpy(dev_a, a, n * sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(dev_b, b, n * sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(dev_c, c, n * sizeof(int), cudaMemcpyHostToDevice);
+
+    StopWatchInterface *timer=NULL;
+    sdkCreateTimer(&timer);
+    sdkResetTimer(&timer);
+    sdkStartTimer(&timer);
+
     add <<<gridSize, blockSize>>>(dev_a, dev_b, dev_c, n);
     cudaMemcpy(c, dev_c, n * sizeof(int), cudaMemcpyDeviceToHost);
 
@@ -63,12 +63,13 @@ int **cpu(long n){
     int * b = new int[n];
     int * c = new int[n];
 
-    auto start_time = chrono::high_resolution_clock::now();
-
     for (long i = 0; i < n; i++) {
         a[i] = i;
         b[i] = i * 2;
+        c[i] = 0;
     }
+
+    auto start_time = chrono::high_resolution_clock::now();
 
     for (long i = 0; i < n; i++) {
         c[i] = a[i] + b[i];
