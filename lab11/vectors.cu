@@ -110,9 +110,9 @@ int main(int argc, char* argv[]) {
     int method = atoi(argv[3]);
     int n = gridSize*blockSize;
 
-    if (method == "gpu") {
+    if (method == 1) {
         int** cudaResult = cuda(n, gridSize, blockSize);
-    } else if (method == "cpu") {
+    } else if (method == 0) {
         int** cpuResult = cpu(n);
     } else {
         int** cudaResult = cuda(n, gridSize, blockSize);
