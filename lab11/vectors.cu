@@ -39,13 +39,14 @@ int** cuda(long n, int gridSize, int blockSize){
     sdkStartTimer(&timer);
 
     add <<<gridSize, blockSize>>>(dev_a, dev_b, dev_c, n);
-    cudaMemcpy(c, dev_c, n * sizeof(int), cudaMemcpyDeviceToHost);
 
     cudaThreadSynchronize();
     sdkStopTimer(&timer);
     float time = sdkGetTimerValue(&timer);
     sdkDeleteTimer(&timer);
     cout << "gpu\t" << n << "\t" << time << "\t" << gridSize << "\t" << blockSize << "\t" << endl;
+
+    cudaMemcpy(c, dev_c, n * sizeof(int), cudaMemcpyDeviceToHost);
 
     cudaFree(dev_a);
     cudaFree(dev_b);
