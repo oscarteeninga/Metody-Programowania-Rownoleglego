@@ -31,7 +31,7 @@ int** cuda(long n, int gridSize, int blockSize){
     cudaMalloc((void **) &dev_a, n * sizeof(int));
     cudaMalloc((void **) &dev_b, n * sizeof(int));
     cudaMalloc((void **) &dev_c, n * sizeof(int));
-    for (int i = 0; i < n; i++) {
+    for (long i = 0; i < n; i++) {
         a[i] = i;
         b[i] = i * 2;
     }
@@ -65,12 +65,12 @@ int **cpu(long n){
 
     auto start_time = chrono::high_resolution_clock::now();
 
-    for (int i = 0; i < n; i++) {
+    for (long i = 0; i < n; i++) {
         a[i] = i;
         b[i] = i * 2;
     }
 
-    for (int i = 0; i < n; i++) {
+    for (long i = 0; i < n; i++) {
         c[i] = a[i] + b[i];
     }
 
@@ -105,8 +105,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    int gridSize = atoi(argv[1]);
-    int blockSize = atoi(argv[2]);
+    long gridSize = atoi(argv[1]);
+    long blockSize = atoi(argv[2]);
     int method = atoi(argv[3]);
     long n = gridSize*blockSize;
 
