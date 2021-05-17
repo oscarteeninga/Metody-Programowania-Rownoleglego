@@ -45,7 +45,7 @@ int** cuda(int n, int gridSize, int blockSize){
     sdkStopTimer(&timer);
     float time = sdkGetTimerValue(&timer);
     sdkDeleteTimer(&timer);
-    printf ("Time for the kernel: %f ms\n", time);
+    cout << "gpu\t" << n << "\t" << gridSize << "\t" << blockSize << "\t" << time << endl;
 
     cudaFree(dev_a);
     cudaFree(dev_b);
@@ -77,7 +77,7 @@ int **cpu(int n){
 
     clock_t end_time = clock();
     double time = (double) (end_time - start_time);
-    cout << "gpu\t" << n << "\t" << time << endl;
+    cout << "cpu\t" << n << "\t" << time << endl;
 
     int ** result = new int*[3];
     result[0] = a;
