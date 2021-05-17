@@ -76,7 +76,7 @@ int **cpu(int n){
     }
 
     auto end_time = chrono::high_resolution_clock::now();
-    auto time = end_time - start_time;
+    double time = (double) (end_time - start_time);
     cout << "gpu\t" << n << "\t" << time << endl;
 
     int ** result = new int*[3];
