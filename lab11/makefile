@@ -1,16 +1,13 @@
-BLOCKS = $(shell seq 1 2 4 8 16 32 64 128 256 512 1024 2048)
-GRIDS =  $(shell seq 1 2 4 8 16 32 64 128 256 512 1024)
-CORES = $(shell seq 1 90 180 360 720 1440 2880)
+GRIDS = $(shell seq 1 2 4 8 16 32 64 128 256 512 1024 2048)
+BLOCKS =  $(shell seq 1 2 4 8 16 32 64 128 256 512 1024)
 
 build:
 	nvcc -std=c++11 -I cuda-samples/Common/ vectors.cu -o vectors
 
 test:
-	@for core in $(CORES); do \
+	@for block in $(BLOCKS); do \
 		for grid in $(GRIDS); do \
-			for block in $(BLOCKS); do \
-				./vectors $$($$n * $$grid * $$block) $$grid $$block; \
-			done ; \	
+			./vectors $$grid $$block; \
 		done ; \
 		printf "\n" ; \
 	done

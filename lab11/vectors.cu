@@ -100,7 +100,7 @@ int checkResults(int** cuda, int** cpp, int n){
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 4) {
+    if (argc < 3) {
         cout << "Proper format is: <grid_size> <block_size>" << endl;
         return 1;
     }
