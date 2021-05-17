@@ -63,7 +63,7 @@ int **cpu(int n){
     int * b = new int[n];
     int * c = new int[n];
 
-    auto begin = chrono::high_resolution_clock::now();
+    auto start_time = chrono::high_resolution_clock::now();
 
     for (int i = 0; i < n; i++) {
         a[i] = i;
@@ -74,7 +74,7 @@ int **cpu(int n){
         c[i] = a[i] + b[i];
     }
 
-    auto end = std::chrono::high_resolution_clock::now();
+    auto end_time = std::chrono::high_resolution_clock::now();
     auto time = end_time - start_time;
     printf("cpu\t%d\t%f\n");
 
