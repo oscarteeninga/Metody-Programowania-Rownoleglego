@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <helper_timer.h>
 #include <iostream>
-#include <ctime>
+#include <chrono>
 
 using namespace std;
 
@@ -63,7 +63,7 @@ int **cpu(int n){
     int * b = new int[n];
     int * c = new int[n];
 
-    clock_t start_time = clock();
+    auto begin = chrono::high_resolution_clock::now();
 
     for (int i = 0; i < n; i++) {
         a[i] = i;
@@ -74,9 +74,9 @@ int **cpu(int n){
         c[i] = a[i] + b[i];
     }
 
-    clock_t end_time = clock();
-    double time = (double) 1000.0 * (end_time - start_time) / CLOCKS_PER_SEC;
-    cout << "cpu\t" << n << "\t" << time << endl;
+    auto end = std::chrono::high_resolution_clock::now();
+    auto time = end_time - start_time;
+    printf("cpu\t%d\t%f\n");
 
     int ** result = new int*[3];
     result[0] = a;

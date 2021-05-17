@@ -1,5 +1,5 @@
-BLOCKS = $(shell seq 1 12)
-GRIDS = $(shell seq 1 12)
+BLOCKS = $(shell seq 1 2 4 8 16 32 64 128 256 512 1024 2048)
+GRIDS =  $(shell seq 1 2 4 8 16 32 64 128 256 512 1024)
 NS = $(shell seq 1000000 1000000 10000000)
 
 build:
