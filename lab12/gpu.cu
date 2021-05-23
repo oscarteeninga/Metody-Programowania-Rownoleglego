@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
     checkErrors("update");
 
     double elapsed = stop - start;
-    std::cout << "gpu\t%d\t%f" << N << elapsed << std::endl;
+    std::cout << "gpu" << "\t" << N << "\t" << elapsed << std::endl;
 
     // Copy result back to host
     cudaMemcpy(u, u_d, N * N * sizeof(float), cudaMemcpyDeviceToHost);
