@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
             for (int j = 0; j < N; j++) {
                 I = N * j + i;
                 if ((I > N) && (I < N * N - 1 - N) && (I % N != 0) && (I % N != N - 1)) {
-                    int add = (alpha*dt)/(h*h)*(u_prev[I+N] + u_prev[I-N] + u_prev[I-1] + u_prev[I+1] - 4*u_prev[I]);
+                    float add = (alpha*dt)/(h*h)*(u_prev[I+N] + u_prev[I-N] + u_prev[I-1] + u_prev[I+1] - 4*u_prev[I]);
                     u[I] += add;
                 }
 
@@ -90,10 +90,10 @@ int main(int argc, char *argv[]) {
 
     printf("cpu\t%d\t%.5f\n", N, cpu_time.count());
 
-    delete u;
-    delete u_prev;
-    delete x;
-    delete y;
+    delete[] u;
+    delete[] u_prev;
+    delete[] x;
+    delete[] y;
 
     return 0;
 }
