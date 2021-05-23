@@ -69,7 +69,8 @@ int main(int argc, char *argv[]) {
                 for (int i = 0; i < N; i++) {
                     I = N * j + i;
                     cout << setprecision(3) << u[I] << "\t";
-                    temperature << u[I] << "\t";
+                    temperature << u[I];
+                    if (I % N != N-1) temperature << "\t";
                 }
                 temperature << "\n";
                 cout << endl;
