@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     
     // Allocate in CPU
     int N = atoi(argv[1]);
-    int BLOCKSIZE = 16;
+    int BLOCKSIZE = 128;
 
     cudaSetDevice(0);
 
