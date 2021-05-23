@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
             for (int j = 0; j < N; j++) {
                 int I = N*j + i;
                 if ((I > N) && (I < N * N - 1 - N) && (I % N != 0) && (I % N != N - 1)) {
-                    u[I] += (alpha*dt/h*h)*(u[I+N] + u[I-N] + u[I-1] + u[I+1] - 4*u[I]);
+                    u[I] += (alpha*dt)/(h*h)*(u[I+N] + u[I-N] + u[I-1] + u[I+1] - 4*u[I]);
                 }
 
             }
@@ -68,12 +68,12 @@ int main(int argc, char *argv[]) {
             for (int j = 0; j < N; j++) {
                 for (int i = 0; i < N; i++) {
                     I = N * j + i;
-                    cout << setprecision(3) << u[I] << "\t";
+                    // cout << setprecision(3) << u[I] << "\t";
                     temperature << u[I];
                     if (I % N != N-1) temperature << "\t";
                 }
                 temperature << "\n";
-                cout << endl;
+                // cout << endl;
             }
             temperature.close();
         }
