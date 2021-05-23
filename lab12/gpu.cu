@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
     checkErrors("update");
 
     double elapsed = stop - start;
-    std::cout << "time = " << elapsed << std::endl;
+    std::cout << "gpu\t%d\t%f" << N << elapsed << std::endl;
 
     // Copy result back to host
     cudaMemcpy(u, u_d, N * N * sizeof(float), cudaMemcpyDeviceToHost);
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < N; i++) {
             I = N * j + i;
             //	std::cout<<u[I]<<"\t";
-            temperature << u[I] << "\t" << std::endl;
+            temperature << u[I] << "\t";
         }
         temperature << "\n";
         //std::cout<<std::endl;
