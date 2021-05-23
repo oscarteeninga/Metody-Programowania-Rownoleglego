@@ -9,6 +9,5 @@ for file in files:
     with open("./temperature/" + file) as f:
         data = f.read()
         u_str = [row.split("\t")[:-1] for row in data.split('\n')[:-1]]
-        # Skala logarytmiczna, zeby bylo ladniej widac
-        u_f = [[math.log(float(x)+1) for x in xs] for xs in u_str]
+        u_f = [[float(x) for x in xs] for xs in u_str]
         plt.imsave("./visualize/" + file.replace(".txt", ".png"), u_f)
