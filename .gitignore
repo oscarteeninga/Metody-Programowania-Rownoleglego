@@ -36,3 +36,7 @@
 
 # PEM files
 *.pem
+
+# temperature
+lab12/temperature
+lab12/visualize
