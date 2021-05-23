@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 
             }
         }
-        if ((STOP != steps && (t % STOP == 0 || t == steps-1))) {
+        if (STOP != steps && t % STOP == 0) {
             ofstream temperature("temperature/temperature_" + to_string(t) + ".txt");
             for (int j = 0; j < N; j++) {
                 for (int i = 0; i < N; i++) {
@@ -89,6 +89,17 @@ int main(int argc, char *argv[]) {
     chrono::duration<double, std::milli> cpu_time = end_time - start_time;
 
     printf("cpu\t%d\t%.5f\n", N, cpu_time.count());
+
+    std::ofstream temperature("temperature/temperature_cpu.txt");
+    for (int j = 0; j < N; j++) {
+        for (int i = 0; i < N; i++) {
+            I = N * j + i;
+            //	std::cout<<u[I]<<"\t";
+            temperature << u[I] << "\t";
+        }
+        temperature << "\n";
+        //std::cout<<std::endl;
+    }
 
     delete[] u;
     delete[] u_prev;
