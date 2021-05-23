@@ -1,7 +1,4 @@
-SIZE = 64 128 256 512 1024 2048 4096 8192 16384 32768 65536 131072 262144
-
-build:
-	nvcc -std=c++11 -I cuda-samples/Common/ vectors.cu -o vectors
+SIZE = 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200
 
 cpu: 
 	g++ -std=c++11 cpu.cpp -o cpu.x
@@ -9,7 +6,7 @@ cpu:
 gpu:
 	nvcc -std=c++11 -I cuda-samples/Common/ gpu.cu -o gpu.x
 
-test_cpu:
+test_cpu: cpu
 	@for N in $(SIZE); do \
 		./cpu.x $$N ; \
 	done
