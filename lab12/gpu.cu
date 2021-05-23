@@ -24,7 +24,7 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
 
     // if not boundary do
     if ((I > N) && (I < N * N - 1 - N) && (I % N != 0) && (I % N != N - 1)) {
-        atomicAdd(u[I], (alpha*dt)/(h*h)*(u[I+N] + u[I-N] + u[I-1] + u[I+1] - 4*u[I]));
+        atomicAdd(&u[I], (alpha*dt)/(h*h)*(u[I+N] + u[I-N] + u[I-1] + u[I+1] - 4*u[I]));
     }
 
     // Boundary conditions are automatically imposed
@@ -99,12 +99,12 @@ int main(int argc, char *argv[]) {
     // Copy result back to host
     cudaMemcpy(u, u_d, N * N * sizeof(float), cudaMemcpyDeviceToHost);
 
-    std::ofstream temperature("temperature_global.txt");
+    std::ofstream temperature("temperature/temperature_gpu.txt");
     for (int j = 0; j < N; j++) {
         for (int i = 0; i < N; i++) {
             I = N * j + i;
             //	std::cout<<u[I]<<"\t";
-            temperature << x[I] << "\t" << y[I] << "\t" << u[I] << std::endl;
+            temperature << u[I] << "\t" << std::endl;
         }
         temperature << "\n";
         //std::cout<<std::endl;
