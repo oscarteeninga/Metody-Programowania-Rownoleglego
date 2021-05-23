@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void copy_matrix(int N, float *u, float *u_prev) {
+void copy_array(int N, float *u, float *u_prev) {
     for (int i = 0; i < N*N; i++) {
         u_prev[i] = u[i];
     }
@@ -59,10 +59,10 @@ int main(int argc, char *argv[]) {
     auto start_time = chrono::high_resolution_clock::now();
 
     for (int t = 0; t < steps; t++) {
-        copy_matrix(N, u, u_prev);
+        copy_array(N, u, u_prev);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                int I = N*j + i;
+                I = N*j + i;
                 if ((I > N) && (I < N * N - 1 - N) && (I % N != 0) && (I % N != N - 1)) {
                     u[I] += (alpha*dt)/(h*h)*(u_prev[I+N] + u_prev[I-N] + u_prev[I-1] + u_prev[I+1] - 4*u_prev[I]);
                 }
@@ -89,4 +89,10 @@ int main(int argc, char *argv[]) {
 
     printf("cpu\t%d\t%.5f\n", N, cpu_time.count());
 
+    delete u;
+    delete u_prev;
+    delete x;
+    delete y;
+
+    return 0;
 }

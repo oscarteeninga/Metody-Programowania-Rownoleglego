@@ -24,7 +24,8 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
 
     // if not boundary do
     if ((I > N) && (I < N * N - 1 - N) && (I % N != 0) && (I % N != N - 1)) {
-        atomicAdd(&u[I], (alpha*dt)/(h*h)*(u_prev[I+N] + u_prev[I-N] + u_prev[I-1] + u_prev[I+1] - 4*u_prev[I]));
+        float add = (alpha*dt)/(h*h)*(u_prev[I+N] + u_prev[I-N] + u_prev[I-1] + u_prev[I+1] - 4*u_prev[I])
+        atomicAdd(&u[I], add);
     }
 
     // Boundary conditions are automatically imposed
