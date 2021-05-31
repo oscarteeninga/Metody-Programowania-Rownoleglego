@@ -3,5 +3,9 @@ ssh teeninga@bastion.ki.agh.edu.pl
 ssh vnode-01.dydaktyka.icsr.agh.edu.pl
 
 # Zeus
-ssh teeninga@bastion.ki.agh.edu.pl
 ssh plgteeninga@ui.cyfronet.pl
+
+# Prometheus
+ssh plgteeninga@pro.cyfronet.pl
+srun -p plgrid-gpu -N 1 -n 1 -A plgmpragh --gres=gpu:1 --pty /bin/bash -l
+module add plgrid/apps/cuda/9.1
