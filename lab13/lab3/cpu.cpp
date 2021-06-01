@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     auto end_time = chrono::high_resolution_clock::now();
     chrono::duration<double, std::milli> cpu_time = end_time - start_time;
 
-    printf("cpu\t%d\t%.5f\n", N, cpu_time.count());
+    printf("%.5f\n", cpu_time.count());
 
     std::ofstream temperature("temperature/temperature_cpu.txt");
     for (int j = 0; j < N; j++) {
