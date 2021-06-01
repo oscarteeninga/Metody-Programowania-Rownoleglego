@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
 
     double elapsed = stop - start;
 
-    std::cout << N << "\t" << elapsed << std::endl;
+    std::cout << elapsed << std::endl;
 
     // Copy result back to host
     cudaMemcpy(u, u_d, N_max * N_max * sizeof(float), cudaMemcpyDeviceToHost);
