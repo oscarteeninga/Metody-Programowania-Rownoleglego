@@ -74,7 +74,7 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
 int main(int argc, char *argv[]) {
     // Allocate in CPU
     int N = atoi(argv[1]);
-    int BLOCKSIZE = 16;
+    int BLOCKSIZE = atoi(argv[2]);
 
     cudaSetDevice(0);
 
