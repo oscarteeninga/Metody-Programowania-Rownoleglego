@@ -76,9 +76,9 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     // Allocate in CPU
-    int N = 128;        // For textures to work, N needs to be a multiple of
+    int N = atoi(argv[1]);        // For textures to work, N needs to be a multiple of
     int BLOCKSIZE = 16;    // 32. As I will be using BLOCKSIZE to be a multiple of 8
     // I'll just look for the closest multiple of BLOCKSIZE (N_max)
 
@@ -148,7 +148,7 @@ int main() {
 
     double elapsed = stop - start;
 
-    std::cout << "time = " << elapsed << std::endl;
+    std::cout << N << "\t" << elapsed << std::endl;
 
     // Copy result back to host
     cudaMemcpy(u, u_d, N_max * N_max * sizeof(float), cudaMemcpyDeviceToHost);

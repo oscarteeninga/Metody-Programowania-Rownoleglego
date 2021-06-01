@@ -58,9 +58,9 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
     // as we don't touch boundaries
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     // Allocate in CPU
-    int N = 128;
+    int N = atoi(argv[1]);
     int BLOCKSIZE = 16;
 
     cudaSetDevice(0);
@@ -116,7 +116,7 @@ int main() {
     checkErrors("update");
 
     double elapsed = stop - start;
-    std::cout << "time = " << elapsed << std::endl;
+    std::cout << N << "\t" << elapsed << std::endl;
 
     // Copy result back to host
     cudaMemcpy(u, u_d, N * N * sizeof(float), cudaMemcpyDeviceToHost);
