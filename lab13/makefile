@@ -19,7 +19,7 @@ test01:
 	@printf "\n"
 
 test02:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_global.cu -o global
+	nvcc -I cuda-samples/Common/ FD_2D_global.cu -o global
 	@for N in $(CPU_SIZE); do \
 		./global $$N 16 ; \
 	done
@@ -27,21 +27,21 @@ test02:
 
 # Testy wpływu rozmiaru siatki na wydajność obliczeń dla różnych typów pamięci
 test11:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_global.cu -o global
+	nvcc -I cuda-samples/Common/ FD_2D_global.cu -o global
 	@for N in $(SIZE); do \
 		./global $$N 16 ; \
 	done
 	@printf "\n"
 
 test12:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_shared.cu -o shared
+	nvcc -I cuda-samples/Common/ FD_2D_shared.cu -o shared
 	@for N in $(SIZE); do \
 		./shared $$N 16 ; \
 	done
 	@printf "\n"
 
 test13:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_texture_pad.cu -o texture
+	nvcc -I cuda-samples/Common/ FD_2D_texture_pad.cu -o texture
 	@for N in $(SIZE); do \
 		./texture $$N 16; \
 	done
@@ -49,21 +49,21 @@ test13:
 
 # Testy wpływu wielkości bloku wątków na wydajność obliczeń
 test21:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_global.cu -o global
+	nvcc -I cuda-samples/Common/ FD_2D_global.cu -o global
 	@for B in $(BLOCK_SIZE); do \
 		./global 128 $$B; \
 	done
 	@printf "\n"
 
 test22:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_shared.cu -o shared
+	nvcc -I cuda-samples/Common/ FD_2D_shared.cu -o shared
 	@for B in $(BLOCK_SIZE); do \
 		./shared 128 $$B; \
 	done
 	@printf "\n"
 
 test23:
-	nvcc -I cuda-samples/Common/ lab3/FD_2D_texture_pad.cu -o texture
+	nvcc -I cuda-samples/Common/ FD_2D_texture_pad.cu -o texture
 	@for B in $(BLOCK_SIZE); do \
 		./texture 128 $$B; \
 	done
