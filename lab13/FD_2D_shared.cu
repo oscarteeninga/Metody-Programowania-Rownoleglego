@@ -3,6 +3,8 @@
 #include <cmath>
 #include <sys/time.h>
 
+#define BSZ (16)
+
 void checkErrors(char *label) {
 // we need to synchronise first to catch errors due to
 // asynchroneous operations that would otherwise
@@ -28,7 +30,7 @@ double get_time() {
 }
 
 // GPU kernel
-__global__ void copy_array(float *u, float *u_prev, int N, int BSZ) {
+__global__ void copy_array(float *u, float *u_prev, int N) {
     int i = threadIdx.x;
     int j = threadIdx.y;
     int I = blockIdx.y * BSZ * N + blockIdx.x * BSZ + j * N + i;
@@ -37,7 +39,7 @@ __global__ void copy_array(float *u, float *u_prev, int N, int BSZ) {
 
 }
 
-__global__ void update(float *u, float *u_prev, int N, float h, float dt, float alpha, int BSZ) {
+__global__ void update(float *u, float *u_prev, int N, float h, float dt, float alpha) {
     // Setting up indices
     int i = threadIdx.x;
     int j = threadIdx.y;
@@ -74,7 +76,6 @@ __global__ void update(float *u, float *u_prev, int N, float h, float dt, float 
 int main(int argc, char *argv[]) {
     // Allocate in CPU
     int N = atoi(argv[1]);
-    int BLOCKSIZE = atoi(argv[2]);
 
     cudaSetDevice(0);
 
