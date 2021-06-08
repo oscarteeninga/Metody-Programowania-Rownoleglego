@@ -118,12 +118,12 @@ int main(int argc, char *argv[]) {
     cudaMemcpy(u_d, u, N * N * sizeof(float), cudaMemcpyHostToDevice);
 
     // Loop
-    dim3 dimGrid(int((N - 0.5) / BLOCKSIZE) + 1, int((N - 0.5) / BLOCKSIZE) + 1);
-    dim3 dimBlock(BLOCKSIZE, BLOCKSIZE);
+    dim3 dimGrid(int((N - 0.5) / BSZ) + 1, int((N - 0.5) / BSZ) + 1);
+    dim3 dimBlock(BSZ, BSZ);
     double start = get_time();
     for (int t = 0; t < steps; t++) {
-        copy_array <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, BLOCKSIZE);
-        update <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, h, dt, alpha, BLOCKSIZE);
+        copy_array <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N);
+        update <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, h, dt, alpha);
     }
     double stop = get_time();
 
