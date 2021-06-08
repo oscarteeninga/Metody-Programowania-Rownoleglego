@@ -28,7 +28,7 @@ double get_time() {
 }
 
 // GPU kernel
-__global__ void copy_array(float *u, float *u_prev, int N) {
+__global__ void copy_array(float *u, float *u_prev, int N, int BSZ) {
     int i = threadIdx.x;
     int j = threadIdx.y;
     int I = blockIdx.y * BSZ * N + blockIdx.x * BSZ + j * N + i;
@@ -37,7 +37,7 @@ __global__ void copy_array(float *u, float *u_prev, int N) {
 
 }
 
-__global__ void update(float *u, float *u_prev, int N, float h, float dt, float alpha) {
+__global__ void update(float *u, float *u_prev, int N, float h, float dt, float alpha, int BSZ) {
     // Setting up indices
     int i = threadIdx.x;
     int j = threadIdx.y;
@@ -121,8 +121,8 @@ int main(int argc, char *argv[]) {
     dim3 dimBlock(BLOCKSIZE, BLOCKSIZE);
     double start = get_time();
     for (int t = 0; t < steps; t++) {
-        copy_array <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N);
-        update <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, h, dt, alpha);
+        copy_array <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, BLOCKSIZE);
+        update <<<dimGrid, dimBlock>>>(u_d, u_prev_d, N, h, dt, alpha, BLOCKSIZE);
     }
     double stop = get_time();
 
